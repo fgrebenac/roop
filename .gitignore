@@ -3,3 +3,6 @@ models
 temp
 __pycache__
 .DS_Store
+out.jpeg
+source.png
+target.png
