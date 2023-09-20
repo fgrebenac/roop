@@ -26,7 +26,6 @@ from datetime import datetime
 warnings.filterwarnings('ignore', category=FutureWarning, module='insightface')
 warnings.filterwarnings('ignore', category=UserWarning, module='torchvision')
 
-start_time = datetime.now()
 
 def parse_args() -> None:
     signal.signal(signal.SIGINT, lambda signal_number, frame: destroy())
@@ -61,7 +60,7 @@ def parse_args() -> None:
     roop.globals.keep_fps = args.keep_fps
     roop.globals.keep_frames = args.keep_frames
     roop.globals.skip_audio = args.skip_audio
-    roop.globals.many_faces = False
+    roop.globals.many_faces = args.many_faces
     roop.globals.reference_face_position = args.reference_face_position
     roop.globals.reference_frame_number = args.reference_frame_number
     roop.globals.similar_face_distance = args.similar_face_distance
@@ -131,11 +130,11 @@ def update_status(message: str, scope: str = 'ROOP.CORE') -> None:
 
 
 def start() -> None:
-    global start_time
     for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
         if not frame_processor.pre_start():
             return
     # process image to image
+    start_time = datetime.now()
     if has_image_extension(roop.globals.target_path):
         if predict_image(roop.globals.target_path):
             destroy()
@@ -212,8 +211,6 @@ def destroy() -> None:
 
 
 def run() -> None:
-    global start_time
-    start_time = datetime.now()
     parse_args()
     if not pre_check():
         return
