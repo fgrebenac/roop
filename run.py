@@ -9,8 +9,8 @@ def main():
     output = sys.stdout.buffer
     while True:
         command = input.readline().strip()
-        if command == "start":
-            core.run()
+        if command != "":
+            core.run(command)
             output.write(bytes("finish\n", 'utf-8'))
             output.flush()
         else:
