@@ -138,8 +138,8 @@ def start() -> None:
             return
     # process image to image
     if has_image_extension(roop.globals.target_path):
-        if predict_image(roop.globals.target_path):
-            destroy()
+        # if predict_image(roop.globals.target_path):
+        #     destroy()
         shutil.copy2(roop.globals.target_path, roop.globals.output_path)
         # process frame
         for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
@@ -158,8 +158,8 @@ def start() -> None:
             output.write(bytes("fail\n", 'utf-8'))
         return
     # process image to videos
-    if predict_video(roop.globals.target_path):
-        destroy()
+    # if predict_video(roop.globals.target_path):
+    #     destroy()
     update_status('Creating temporary resources...')
     create_temp(roop.globals.target_path)
     # extract frames
