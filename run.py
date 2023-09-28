@@ -11,7 +11,6 @@ def main():
         command = input.readline().strip()
         if command != "":
             core.run(command)
-            output.write(bytes("finish\n", 'utf-8'))
             output.flush()
         else:
             output.write("didn't get start\n")

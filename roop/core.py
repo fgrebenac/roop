@@ -131,8 +131,10 @@ def update_status(message: str, scope: str = 'ROOP.CORE') -> None:
 
 def start() -> None:
     global start_time
+    output = sys.stdout.buffer
     for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
         if not frame_processor.pre_start():
+            output.write(bytes("fail\n", 'utf-8'))
             return
     # process image to image
     if has_image_extension(roop.globals.target_path):
@@ -150,8 +152,10 @@ def start() -> None:
             time_diff = end_time - start_time
             update_status(f'Processing image ended {time_diff.total_seconds()}\n')
             update_status('Processing to image succeed!')
+            output.write(bytes("finish\n", 'utf-8'))
         else:
             update_status('Processing to image failed!')
+            output.write(bytes("fail\n", 'utf-8'))
         return
     # process image to videos
     if predict_video(roop.globals.target_path):
